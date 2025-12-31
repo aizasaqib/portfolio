@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS VARIABLES & RESET */
+        :root {
+            --primary: #2563eb;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text: #1e293b;
+            --gray: #64748b;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--white);
+        }
+
+        /* NAVIGATION */
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            /* backdrop-filter: blur(12px); */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--dark); }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; list-style: none; gap: 2rem; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%);
+        }
+
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); margin-bottom: 1rem; color: var(--dark); }
+        .hero p { font-size: 1.2rem; color: var(--gray); max-width: 600px; margin-bottom: 2rem; }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* SECTIONS */
+        section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
+        h2 { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; color: var(--dark); }
+
+        /* PROJECTS GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: 0.3s;
+        }
+        .card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+        .card h3 { margin-bottom: 0.5rem; }
+        .card p { color: var(--gray); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+        /* CONTACT FORM */
+        form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        input, textarea {
+            padding: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        button {
+            background: var(--dark);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        footer { text-align: center; padding: 3rem; background: var(--light); color: var(--gray); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">PORTFOLIO<span>.</span></div>
+            <ul class="nav-links">
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Creative Developer<span>.</span></h1>
+        <p>I design and build high-quality digital products and web experiences that are fast, accessible, and visually stunning.</p>
+        <a href="#projects" class="btn">View My Work</a>
+    </section>
+
+    <section id="projects">
+        <h2>Selected Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Project One</h3>
+                <p>A modern e-commerce platform built with specialized focus on user experience and conversion optimization.</p>
+                <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Case Study →</a>
+            </div>
+            <div class="card">
+                <h3>Project Two</h3>
+                <p>A data visualization dashboard that processes real-time API feedback into intuitive charts.</p>
+                <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Case Study →</a>
+            </div>
+            <div class="card">
+                <h3>Project Three</h3>
+                <p>Redesigning the mobile experience for a leading tech publication with a focus on typography.</p>
+                <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 600;">Case Study →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Let's Connect</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Your Name. Built with precision.</p>
+    </footer>
+
+</body>
+</html>
