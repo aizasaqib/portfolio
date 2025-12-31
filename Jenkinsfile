@@ -1,9 +1,9 @@
 pipeline { 
     agent any 
     environment { 
-        REPO_URL      = 'https://github.com/zaidqureshi3111995/portfolio-cloud' 
+        REPO_URL      = 'https://github.com/aizasaqib/portfolio' 
         SONARQUBE_ENV = 'SonarQube-Server' 
-        DOCKER_SERVER = 'ubuntu@172.31.26.188' 
+        DOCKER_SERVER = 'ubuntu@ip-172-31-11-228' 
     } 
     stages { 
         stage('Checkout Code') { 
@@ -30,7 +30,7 @@ pipeline {
         } 
         stage('Docker Build & Deploy') { 
             steps { 
-                sshagent(['docker-server-ssh']) { 
+                sshagent(['docker-credentials']) { 
                     sh """ 
                     # index.html is being used here 
                     scp -o StrictHostKeyChecking=no index.html Dockerfile 
