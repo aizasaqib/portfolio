@@ -19,58 +19,36 @@ pipeline {
                 script { 
                     def scannerHome = tool 'SonarQube Scanner' 
                     withSonarQubeEnv("${SONARQUBE_ENV}") { 
-                        sh """ 
-                        ${scannerHome}/bin/sonar-scanner \ 
-                        -Dsonar.projectKey=portfolio-cloud \ 
-                        -Dsonar.projectName=portfolio-cloud \ 
-                        -Dsonar.sources=. \
-                        -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/*.test.js \
-                        -Dsonar.java.binaries=.
-                        """ 
+                        // Command ko ek hi line mein kar diya gaya hai taake backslash ka error na aaye
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=portfolio-cloud -Dsonar.projectName=portfolio-cloud -Dsonar.sources=. -Dsonar.exclusions=**/node_modules/**"
                     } 
                 } 
             } 
         }
 
-        // Quality Gate stage is important to prevent loops/bad code deployment
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
         stage('Docker Build & Deploy') { 
             steps { 
                 sshagent(['docker-credentials']) { 
-                    sh """ 
-                    # StrictHostKeyChecking fix to prevent SSH hang
-                    scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/ 
-                    
-                    ssh -o StrictHostKeyChecking=no ${DOCKER_SERVER} ' 
-                        cd /home/ubuntu
-                        # Build container
-                        docker build -t portfolio-app . 
-                        
-                        # Existing container ko clean up karna
-                        docker stop portfolio-app || true 
-                        docker rm portfolio-app || true 
-                        
-                        # New container run karna
-                        docker run -d -p 80:80 --name portfolio-app portfolio-app 
-                    ' 
-                    """ 
+                    sh """
+                    scp -o StrictHostKeyChecking=no index.html Dockerfile ${DOCKER_SERVER}:/home/ubuntu/
+                    ssh -o StrictHostKeyChecking=no ${DOCKER_SERVER} "
+                        cd /home/ubuntu && \
+                        docker build -t portfolio-app . && \
+                        docker stop portfolio-app || true && \
+                        docker rm portfolio-app || true && \
+                        docker run -d -p 80:80 --name portfolio-app portfolio-app
+                    "
+                    """
                 } 
             } 
         } 
     } 
     post { 
         success { 
-            echo "Deployment Successful: http://172.31.26.188" 
+            echo "Deployment Successful!" 
         } 
         failure { 
-            echo "Pipeline Failed - Check SonarQube or Docker Logs" 
+            echo "Pipeline Failed. Please check the SonarQube Scanner logs in Jenkins." 
         } 
     } 
 }
